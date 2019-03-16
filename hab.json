@@ -1,0 +1,55 @@
+{
+	"layers": {
+		"default": 				{ "minzoom": 5, "maxzoom": 15 },
+		"natural_other": 		{ "minzoom": 5, "maxzoom": 15 },
+		"soil":			 		{ "minzoom": 5, "maxzoom": 15 },
+		"landuse": 				{ "minzoom": 5, "maxzoom": 15 },
+		"wood":			 		{ "minzoom": 5, "maxzoom": 15 },
+		"bush":			 		{ "minzoom": 5, "maxzoom": 15 },
+		"water":		 		{ "minzoom": 5, "maxzoom": 15},
+		"river":		 		{ "minzoom": 5, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 0.5  },
+		"mud":		 			{ "minzoom": 5, "maxzoom": 15},
+		"aeroway":		 		{ "minzoom": 5, "maxzoom": 15 },
+		"aeroway_other": 		{ "minzoom": 5, "maxzoom": 15 },
+
+		"road_main":	 		{ "minzoom": 5, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 0.5  },
+		"road_secondary": 		{ "minzoom": 7, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 0.5  },
+		"road_tertiary": 		{ "minzoom": 11, "maxzoom": 15  },
+		"road_other": 			{ "minzoom": 13, "maxzoom": 15  },
+
+		"railway": 				{ "minzoom": 13, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 0.5  },
+
+		"building":		 		{ "minzoom": 14, "maxzoom": 15 },
+
+		"admin": {
+			"source": "../data/boundaries/Voivodeship_AL4.shp",
+			"source_columns": [
+				"admin_level"
+			],
+			"minzoom": 5,
+			"maxzoom": 10,
+			"simplify_below": 7,
+			"simplify_level": 0.001,
+			"simplify_ratio": 0.5
+		},
+
+		"place_label": 			{ "minzoom": 6 , "maxzoom": 15 },
+		"road_label":			{ "minzoom": 6, "maxzoom": 15 }
+
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": { "vector_layers": [
+						{ "id": "building", "description": "building", "fields": {}}
+					] }
+		}
+	}
+}

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Display a map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <!-- <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script> -->
+  <!-- <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' /> -->
+  <script src='js/mapbox-gl.js'></script>
+  <link href='css/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="menu"></nav>
+  <div id='map'></div>
+
+  <style>
+    #menu {
+      background: rgb(32, 42, 73);
+      position: absolute;
+      z-index: 1;
+      bottom: 20px;
+      right: 10px;
+      border-radius: 3px;
+      width: 180px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+      font-size: 8px;
+      color: #404040;
+      display: block;
+      margin: 0;
+      padding: 0;
+      padding: 10px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    #menu a:last-child {
+      border: none;
+    }
+
+    #menu a:hover {
+      background-color: #f8f8f8;
+      color: #404040;
+    }
+
+    #menu a.active {
+      background-color: #265c83;
+      color: #d3d3d3;
+    }
+
+    #menu a.active:hover {
+      background: #3074a4;
+    }
+  </style>
+
+  <script>
+    // mapboxgl.accessToken = 'NONE';
+
+    var land_type_min_zoom = 9;
+
+    var style =
+    {
+
+      "version": 8,
+      "name": "Basic",
+      "metadata": {
+        "mapbox:autocomposite": true,
+        "mapbox:type": "template"
+      },
+
+      "sources": {
+        "mapbox": {
+          "type": "vector",
+          "tiles": [
+            // "http://localhost:3000/maz7/{x}/{y}/{z}.pbf"
+            location.origin + "/maz7/{z}/{x}/{y}.pbf"
+          ],
+          "minzoom": 5,
+          "maxzoom": 15
+        },
+        "boundaries": {
+          "type": "vector",
+          "tiles": [
+            // "http://localhost:3000/admin/{x}/{y}/{z}.pbf"
+            location.origin + "/admin/{z}/{x}/{y}.pbf"
+          ],
+          "minzoom": 5,
+          "maxzoom": 15
+        }
+      },
+
+      // "sprite": "mapbox://sprites/mapbox/basic-v9",
+      "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+      // "glyphs": location.origin + "/font/{fontstack}/{range}.pbf",
+
+      "layers": [
+
+        {
+          "id": "background",
+          "type": "background",
+          "paint": {
+            "background-color": "hsl(47, 2%, 10%)"
+          }
+        },
+
+
+        {
+          "id": "natural_other",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "natural_other",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(20,50,20)",
+            "fill-opacity": .5
+          },
+        },
+
+
+        {
+          "id": "soil",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "soil",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(70,40,35)",
+            "fill-opacity": .5
+          },
+        },
+
+
+
+        {
+          "id": "landuse_other",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(40,40,40)",
+            "fill-opacity": .75
+          },
+          "filter": [
+            "!in",
+            "class",
+            "forest", "national_park", "reservoir", "park", "grass", "farmland", "farmyard", "residential",
+            "commercial", "construction", "industrial", "retail"
+          ],
+        },
+
+
+        {
+          "id": "landuse_forest",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(0,80,0)",
+            "fill-opacity": .5
+          },
+          "filter": [
+            "in",
+            "class",
+            "forest", "national_park", "reservoir"
+          ],
+        },
+
+
+        {
+          "id": "landuse_park",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(0,120,0)",
+            "fill-opacity": .5
+          },
+          "filter": [
+            "==",
+            "class",
+            "park"
+          ],
+        },
+
+
+        {
+          "id": "landuse_grass",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(30,120,30)",
+            "fill-opacity": .5
+          },
+          "filter": [
+            "==",
+            "class",
+            "grass"
+          ],
+        },
+
+
+        {
+          "id": "landuse_farmland",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": 10,
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "hsl(45, 0.35, 0.333)",
+            "fill-opacity": .75
+          },
+          "filter": [
+            "in",
+            "class",
+            "farmland", "farmyard"
+          ],
+        },
+
+
+
+        {
+          "id": "landuse_residential",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(70,70,70)",
+            "fill-opacity": 1
+          },
+          "filter": [
+            "==",
+            "class",
+            "residential"
+          ],
+        },
+
+
+        {
+          "id": "landuse_com",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "landuse",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(70,70,70)",
+            "fill-opacity": 1
+          },
+          "filter": [
+            "in",
+            "class",
+            "commercial", "construction", "industrial", "retail"
+          ],
+        },
+
+
+        {
+          "id": "wood",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "wood",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(0,80,60)",
+            "fill-opacity": .5
+          }
+        },
+
+
+        {
+          "id": "bush",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "bush",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(0,120,90)",
+            "fill-opacity": .5
+          }
+        },
+
+
+
+
+
+        {
+          "id": "water",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "water",
+          "minzoom": 9,
+          "paint": {
+            "fill-color": "hsl(225, .35, .45)"
+          },
+          "filter": [
+            "in",
+            "class",
+            "riverbank", "water"
+          ]
+        },
+
+        {
+          "id": "wetland",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "water",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "hsl(205, .3, .37)"
+          },
+          "filter": [
+            "==",
+            "class",
+            "wetland"
+          ]
+        },
+
+        {
+          "id": "mud",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "mud",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(80,50,20)"
+          },
+        },
+
+
+        {
+          "id": "river",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "river",
+          "maxzoom": 9,
+          "paint": {
+            "line-color": "rgb(0,50,150)",
+            "line-width": 1.5
+          },
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "LineString"
+            ],
+            [
+              "in",
+              "class",
+              "river",
+              "canal",
+              // "stream"
+            ]
+          ],
+        },
+
+
+
+        {
+          "id": "admin",
+          "type": "line",
+          "source": "boundaries",
+          "source-layer": "admin",
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "Polygon"
+            ],
+            // [
+            //   "==",
+            //   "admin_level",
+            //   4
+            // ]
+          ],
+          "paint": {
+            "line-color": "rgb(0,150,0)",
+            "line-width": 2
+          }
+        },
+
+
+
+
+        {
+          "id": "aeroway",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "aeroway",
+          "minzoom": 9,
+          "paint": {
+            "fill-color": "rgb(180,130,0)"
+          },
+        },
+
+        {
+          "id": "aeroway_other",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "aeroway_other",
+          "minzoom": 9,
+          "paint": {
+            "fill-color": "rgb(180,0,0)"
+          },
+          // "filter": [ "==", "$type", "Polygon" ]
+        },
+
+
+        {
+          "id": "road_other",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "road_other",
+          "paint": {
+            "line-color": "rgb(110,90,80)",
+            "line-width": {
+              "base": 1.8,
+              "stops": [
+                [
+                  4,
+                  0.25
+                ],
+                [
+                  20,
+                  30
+                ]
+              ]
+            }
+          }
+        },
+
+
+        {
+          "id": "road_tertiary",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "road_tertiary",
+          "paint": {
+            "line-color": "rgb(150,100,50)",
+            "line-width": {
+              "base": 1.55,
+              "stops": [
+                [
+                  4,
+                  0.25
+                ],
+                [
+                  20,
+                  30
+                ]
+              ]
+            }
+          }
+        },
+
+
+        {
+          "id": "road_secondary",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "road_secondary",
+          "paint": {
+            "line-color": "rgb(150,100,50)",
+            "line-width": {
+              "base": 1.4,
+              "stops": [
+                [
+                  6,
+                  0.5
+                ],
+                [
+                  20,
+                  30
+                ]
+              ]
+            }
+          }
+        },
+
+
+
+        {
+          "id": "road_main",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "road_main",
+          "paint": {
+            "line-color": "rgb(150,0,0)",
+            "line-width": {
+              "base": 1.5,
+              "stops": [
+                [
+                  6,
+                  0.5
+                ],
+                [
+                  20,
+                  30
+                ]
+              ]
+            }
+          }
+        },
+
+
+        {
+          "id": "railway",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "railway",
+          "paint": {
+            "line-color": "rgb(80,80,80)",
+            "line-width": {
+              "base": 2.5,
+              "stops": [
+                [
+                  6,
+                  0.5
+                ],
+                [
+                  20,
+                  30
+                ]
+              ]
+            },
+            "line-dasharray": [
+              6,
+              3
+            ]
+          }
+        },
+
+        {
+          "id": "building",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "building",
+          "paint": {
+            "fill-color": "rgb(110,95,95)",
+            "fill-opacity": .5
+          }
+          // ,"filter": ["==", "$type", "Polygon"]
+        },
+
+
+
+        {
+          "id": "default",
+          "type": "fill",
+          "source": "mapbox",
+          "source-layer": "default",
+          "paint": {
+            "fill-color": "rgb(255,0,255)",
+            "fill-opacity": 1
+          }
+        },
+
+
+
+        {
+          "id": "place_city",
+          "type": "symbol",
+          "source": "mapbox",
+          "source-layer": "place_label",
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "Point"
+            ],
+            [
+              "in",
+              "type",
+              "capital",
+              "city",
+              "town"
+            ],
+            [
+              ">=",
+              "scalerank",
+              5
+            ]
+          ],
+          "layout": {
+            "text-field": "{name}",
+            "text-font": [
+              "Open Sans Semibold"
+            ],
+            "text-max-width": 6,
+            "text-size": {
+              "stops": [
+                [
+                  6,
+                  12
+                ],
+                [
+                  12,
+                  16
+                ]
+              ]
+            }
+          },
+          "paint": {
+            // "text-color": "rgb(120,150,200)",
+            "text-color": "hsl(220,0.4,0.8)",
+            "text-halo-color": "rgba(0,0,0,0.75)",
+            "text-halo-width": 1,
+            "text-halo-blur": 1
+          }
+        },
+
+
+
+        {
+          "id": "place_other",
+          "type": "symbol",
+          "source": "mapbox",
+          "source-layer": "place_label",
+          "minzoom": 12,
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "Point"
+            ],
+            [
+              "!in",
+              "type",
+              "capital",
+              "city",
+              "town"
+            ],
+            // [
+            //   "<",
+            //   "scalerank",
+            //   7
+            // ]
+          ],
+          "layout": {
+            "text-field": "{name}",
+            "text-font": [
+              "Open Sans Semibold"
+            ],
+            "text-max-width": 6,
+            "text-size": {
+              "stops": [
+                [
+                  6,
+                  12
+                ],
+                [
+                  12,
+                  16
+                ]
+              ]
+            }
+          },
+          "paint": {
+            // "text-color": "rgb(120,150,200)",
+            "text-color": "hsl(220,0.4,0.8)",
+            "text-halo-color": "rgba(0,0,0,0.75)",
+            "text-halo-width": 1,
+            "text-halo-blur": 1
+          }
+        },
+
+
+        {
+          "id": "road_label",
+          "type": "symbol",
+          "source": "mapbox",
+          "source-layer": "road_label",
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "LineString"
+            ],
+          ],
+          "layout": {
+            "symbol-placement": "line",
+            "text-field": "{name}",
+            "text-font": [
+              "Open Sans Semibold"
+            ],
+            "text-transform": "uppercase",
+            "text-letter-spacing": 0.1,
+            "text-size": {
+              "base": 1.4,
+              "stops": [
+                [
+                  10,
+                  8
+                ],
+                [
+                  20,
+                  14
+                ]
+              ]
+            }
+          },
+          "paint": {
+            // "text-color": "rgb(120,150,200)",
+            "text-color": "hsl(220,0.4,0.8)",
+            "text-halo-color": "rgba(0,0,0,0.75)",
+            "text-halo-width": 1,
+            "text-halo-blur": 1
+          }
+        },
+
+
+      ],
+      "id": "g61ohl2cd"
+    };
+
+    var style_admin =
+    {
+      "version": 8,
+      "name": "Basic",
+      "metadata": {
+        "mapbox:autocomposite": true,
+        "mapbox:type": "template"
+      },
+      "sources": {
+        "mapbox": {
+          "type": "vector",
+          "tiles": [
+            "http://localhost:3000/{x}/{y}/{z}.pbf"
+            // "http://localhost/pol/{z}/{x}/{y}.pbf"
+          ],
+          "minzoom": 5,
+          "maxzoom": 15
+        }
+      },
+      "sprite": "mapbox://sprites/mapbox/basic-v9",
+      "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+      "layers": [
+        {
+          "id": "background",
+          "type": "background",
+          "paint": {
+            "background-color": "hsl(47, 2%, 10%)"
+          }
+        },
+
+        {
+          "id": "admin",
+          "type": "line",
+          "source": "mapbox",
+          "source-layer": "admin",
+          "filter": [
+            "all",
+            [
+              "==",
+              "$type",
+              "LineString"
+            ],
+            [
+              "==",
+              "admin_level",
+              2
+            ]
+          ],
+          "paint": {
+            "line-color": "rgb(0,150,0)",
+            "line-width": 2
+          }
+        },
+      ],
+      "id": "g61ohl2cd"
+    };
+
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      // center: [9.52, 47.14], // berlin
+      center: [21.0, 52.25], // warszawa
+      // center: [9.5170203, 47.1243318], // liechtestein
+      // center: [17.8606475, 50.6560905], // opole
+      zoom: 7,
+      // style: 'mapbox://styles/mapbox/basic-v9'
+      style: style,
+      // pitch: 45
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    var scale_ctrl = new mapboxgl.ScaleControl({
+      maxWidth: 800,
+      unit: 'metric'
+    });
+    map.addControl(scale_ctrl);
+
+    var toggleableLayerIds = [
+      "background",
+      "natural_other",
+      "soil",
+      "landuse_other",
+      "landuse_forest",
+      "landuse_park",
+      "landuse_grass",
+      "landuse_farmland",
+      "landuse_residential",
+      "landuse_com",
+      "wood",
+      "bush",
+      "water",
+      "wetland",
+      "mud",
+      "river",
+      "country",
+      "aeroway",
+      "aeroway_other",
+      "road_main",
+      "road_label",
+      "road_secondary",
+      "road_tertiary",
+      "road_other",
+      "railway",
+      "building",
+      "place_city",
+      "place_other",
+      "admin",
+      "default"
+    ];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i];
+
+      var link = document.createElement('a');
+      link.href = '#';
+      link.className = 'active';
+      link.textContent = id;
+
+      link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+        } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+      };
+
+      var layers = document.getElementById('menu');
+      layers.appendChild(link);
+    }
+
+  </script>
+
+</body>
+
+</html>

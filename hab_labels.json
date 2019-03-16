@@ -1,0 +1,21 @@
+{
+	"layers": {
+		"place_label": 			{ "minzoom": 6 , "maxzoom": 15 },
+		"road_label":			{ "minzoom": 6, "maxzoom": 15 }
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": { "vector_layers": [
+						{ "id": "building", "description": "building", "fields": {}}
+					] }
+		}
+	}
+}

@@ -1,0 +1,40 @@
+{
+	"layers": {
+		"water": {
+			"minzoom": 5,
+			"maxzoom": 15
+		},
+		"river": {
+			"minzoom": 5,
+			"maxzoom": 15,
+			"simplify_below": 11,
+			"simplify_level": 0.0015,
+			"simplify_ratio": 2
+		},
+		"mud": {
+			"minzoom": 5,
+			"maxzoom": 15
+		}
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": {
+				"vector_layers": [
+					{
+						"id": "building",
+						"description": "building",
+						"fields": {}
+					}
+				]
+			}
+		}
+	}
+}

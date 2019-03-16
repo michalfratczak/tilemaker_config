@@ -1,0 +1,25 @@
+{
+	"layers": {
+		"road_main":	 		{ "minzoom": 5, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 2  },
+		"road_secondary": 		{ "minzoom": 7, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 2  },
+		"road_tertiary": 		{ "minzoom": 11, "maxzoom": 15  },
+		"road_other": 			{ "minzoom": 13, "maxzoom": 15  },
+
+		"railway": 				{ "minzoom": 13, "maxzoom": 15,	"simplify_below": 12, "simplify_level": 0.001, "simplify_ratio": 2  }
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": { "vector_layers": [
+						{ "id": "building", "description": "building", "fields": {}}
+					] }
+		}
+	}
+}

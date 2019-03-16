@@ -1,0 +1,32 @@
+{
+	"layers": {
+		"admin": {
+			"source": "../data/boundaries/Voivodeship_AL4.shp",
+			"source_columns": [
+				"admin_level"
+			],
+			"minzoom": 5,
+			"maxzoom": 10,
+			"simplify_below": 10,
+			"simplify_length": 100,
+			"simplify_level": 0.0035,
+			"simplify_ratio": 2
+		},
+		"unused":		 		{ "minzoom": 5, "maxzoom": 10 }
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": { "vector_layers": [
+						{ "id": "building", "description": "building", "fields": {}}
+					] }
+		}
+	}
+}

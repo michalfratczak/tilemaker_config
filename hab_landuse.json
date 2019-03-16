@@ -1,0 +1,24 @@
+{
+	"layers": {
+		"natural_other": 		{ "minzoom": 5, "maxzoom": 15 },
+		"soil":			 		{ "minzoom": 5, "maxzoom": 15 },
+		"landuse": 				{ "minzoom": 5, "maxzoom": 15 },
+		"wood":			 		{ "minzoom": 5, "maxzoom": 15 },
+		"bush":			 		{ "minzoom": 5, "maxzoom": 15 }
+	},
+	"settings": {
+		"minzoom": 5,
+		"maxzoom": 15,
+		"basezoom": 15,
+		"include_ids": false,
+		"name": "HAB",
+		"version": "1.0",
+		"description": "HAB",
+		"compress": "none",
+		"metadata": {
+			"json": { "vector_layers": [
+						{ "id": "building", "description": "building", "fields": {}}
+					] }
+		}
+	}
+}
