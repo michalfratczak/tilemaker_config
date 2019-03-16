@@ -4,10 +4,8 @@ import os
 import sys
 import shutil
 import math
-import sqlite3
 import traceback
 
-# from flask import Flask, render_template, make_response
 import bottle
 
 C_BLACK = 		"\033[1;30m"
@@ -43,28 +41,6 @@ app.install(EnableCors())
 db = None
 
 
-'''
-def get_tile_sqlite(z,x,y):
-	global db
-	if not db:
-		db = sqlite3.connect( sys.argv[1] )
-
-	z = int(z)
-	x = int(x)
-	y = int(y)
-	print (z,x,y)
-
-	q = "SELECT tile_data FROM tiles WHERE zoom_level=%d AND tile_column=%d AND tile_row=%d" % (z, x, y)
-
-	cur = db.cursor()
-	cur.execute( q )
-	data = cur.fetchone()
-	# return bytes(data)
-
-	data_str = str(data)
-	print data_str
-	return data_str
-'''
 
 
 def get_tile_file(z,x,y):
@@ -74,23 +50,6 @@ def get_tile_file(z,x,y):
 	y = int(y)
 
 	base_dir = sys.argv[1]
-
-	# check if zoom is available
-	'''
-	avail_zooms = os.listdir(base_dir)
-	try:
-		avail_zooms = filter(lambda x: x.isdigit(), avail_zooms)
-		avail_zooms = map(int, avail_zooms)
-		if z not in avail_zooms:
-			avail_zooms = sorted(avail_zooms)
-			if z < avail_zooms[0]:
-				z = avail_zooms[0]
-			elif z > avail_zooms[-1]:
-				z = avail_zooms[-1]
-			print "fallback zoom ", z
-	except:
-		print traceback.format_exc()
-	'''
 
 	path = base_dir + '/%d/%d/%d.pbf' % (z,x,y)
 
