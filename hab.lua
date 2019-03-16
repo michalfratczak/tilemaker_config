@@ -1,5 +1,8 @@
--- https://taginfo.openstreetmap.org/keys
+-- YOU CAN NAME YOUR LAYERS WHATEVER YOU WANT
+-- AS LONG AS THEY'RE NAMED THE SAME IN: CONFIG.JSON PROCESS.LUA AND JAVASCRIPT-STYLE
 
+
+-- https://taginfo.openstreetmap.org/keys
 node_keys = {
 	-- "Aerialway",
 	-- "Aeroway",
@@ -31,7 +34,7 @@ node_keys = {
 	-- "Waterway"
 }
 
-G_DEFAULT = 0
+-- count number of elements of each type
 G_COUNTS = {}
 
 
@@ -50,6 +53,7 @@ end
 
 
 function exit_function()
+	-- print number of elements of each type
 	for _k,_v in pairs(G_COUNTS)
 	do
 		print("\n")
@@ -111,6 +115,9 @@ function node_function(node)
 end
 
 
+-- the name "way_function" may be a little misleading at first
+-- it handles not only ways, but anything that actually is a geometry of type "LINE" or "POLYGON"
+-- ie. woods, parks, buildings ...
 function way_function(way)
 	local layer = nil
 
@@ -400,7 +407,6 @@ function way_function(way)
 
 	if layer == nil then
 		-- way:Layer("default", false)
-		G_DEFAULT = G_DEFAULT + 1
 	end
 
 end

@@ -83,6 +83,8 @@ def tiles(x=0, y=0, z=0):
 	# bottle.response.content_disposition = 'attachment' # https://github.com/openmaptiles/postserve/blob/master/server.py#L89
 
 	# bottle.response.content_encoding = 'gzip'
-	tile = get_tile_file(z, x, y)
+	tile = get_tile_file(z, x, y) # mind: zoom is first arg
 	return tile
+
+# http://localhost:3000/552/329/10.pbf
 bottle.run(	host='localhost', port=3000, debug=True, reloader=True )
