@@ -5,10 +5,10 @@
   <meta charset='utf-8' />
   <title>Display a map</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <!-- <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script> -->
-  <!-- <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' /> -->
-  <script src='js/mapbox-gl.js'></script>
-  <link href='css/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
+  <!-- <script src='js/mapbox-gl.js'></script> -->
+  <!-- <link href='css/mapbox-gl.css' rel='stylesheet' /> -->
   <style>
     body {
       margin: 0;
@@ -78,41 +78,61 @@
 
     var land_type_min_zoom = 9;
 
-    // layer names has to be the same as in tilemaker's config.json and process.lua
+    var data_root = location.origin + "/osm/poland_tiles";
+    var fonts = location.origin + "/osm/font/{fontstack}/{range}.pbf";
+
+    var data_path_template = "{z}/{x}/{y}.pbf";
+
     var style =
     {
-
+      // "id": "g61ohl2cd",
       "version": 8,
-      "name": "Basic",
+      "name": "hab",
       "metadata": {
         "mapbox:autocomposite": true,
         "mapbox:type": "template"
       },
 
+      "glyphs": fonts,
+
       "sources": {
-        "mapbox": {
+        "aeroway": {
           "type": "vector",
-          "tiles": [
-            // "http://localhost:3000/maz7/{x}/{y}/{z}.pbf"
-            location.origin + "/maz7/{z}/{x}/{y}.pbf"
-          ],
-          "minzoom": 5,
-          "maxzoom": 15
+          "tiles": [data_root + "/aeroway/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
         },
-        "boundaries": {
+        "buildings": {
           "type": "vector",
-          "tiles": [
-            // "http://localhost:3000/admin/{x}/{y}/{z}.pbf"
-            location.origin + "/admin/{z}/{x}/{y}.pbf"
-          ],
-          "minzoom": 5,
-          "maxzoom": 15
+          "tiles": [data_root + "/buildings/" + data_path_template],
+          "minzoom": 14, "maxzoom": 15
+        },
+        "labels": {
+          "type": "vector",
+          "tiles": [data_root + "/labels/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
+        },
+        "landuse": {
+          "type": "vector",
+          "tiles": [data_root + "/landuse/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
+        },
+        "roads": {
+          "type": "vector",
+          "tiles": [data_root + "/roads/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
+        },
+        "water": {
+          "type": "vector",
+          "tiles": [data_root + "/water/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
+        },
+        "admin": {
+          "type": "vector",
+          "tiles": [data_root + "/admin/" + data_path_template],
+          "minzoom": 5, "maxzoom": 15
         }
       },
 
-      // "sprite": "mapbox://sprites/mapbox/basic-v9",
-      "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
-      // "glyphs": location.origin + "/font/{fontstack}/{range}.pbf",
 
       "layers": [
 
@@ -124,11 +144,10 @@
           }
         },
 
-
         {
           "id": "natural_other",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "natural_other",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -137,11 +156,10 @@
           },
         },
 
-
         {
           "id": "soil",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "soil",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -150,12 +168,10 @@
           },
         },
 
-
-
         {
           "id": "landuse_other",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -170,11 +186,10 @@
           ],
         },
 
-
         {
           "id": "landuse_forest",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -188,11 +203,10 @@
           ],
         },
 
-
         {
           "id": "landuse_park",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -206,11 +220,10 @@
           ],
         },
 
-
         {
           "id": "landuse_grass",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -224,11 +237,10 @@
           ],
         },
 
-
         {
           "id": "landuse_farmland",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": 10,
           "minzoom": land_type_min_zoom,
@@ -243,12 +255,10 @@
           ],
         },
 
-
-
         {
           "id": "landuse_residential",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -262,11 +272,10 @@
           ],
         },
 
-
         {
           "id": "landuse_com",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "landuse",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -280,11 +289,10 @@
           ],
         },
 
-
         {
           "id": "wood",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "wood",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -293,11 +301,10 @@
           }
         },
 
-
         {
           "id": "bush",
           "type": "fill",
-          "source": "mapbox",
+          "source": "landuse",
           "source-layer": "bush",
           "minzoom": land_type_min_zoom,
           "paint": {
@@ -306,60 +313,12 @@
           }
         },
 
-
-
-
-
-        {
-          "id": "water",
-          "type": "fill",
-          "source": "mapbox",
-          "source-layer": "water",
-          "minzoom": 9,
-          "paint": {
-            "fill-color": "hsl(225, .35, .45)"
-          },
-          "filter": [
-            "in",
-            "class",
-            "riverbank", "water"
-          ]
-        },
-
-        {
-          "id": "wetland",
-          "type": "fill",
-          "source": "mapbox",
-          "source-layer": "water",
-          "minzoom": land_type_min_zoom,
-          "paint": {
-            "fill-color": "hsl(205, .3, .37)"
-          },
-          "filter": [
-            "==",
-            "class",
-            "wetland"
-          ]
-        },
-
-        {
-          "id": "mud",
-          "type": "fill",
-          "source": "mapbox",
-          "source-layer": "mud",
-          "minzoom": land_type_min_zoom,
-          "paint": {
-            "fill-color": "rgb(80,50,20)"
-          },
-        },
-
-
         {
           "id": "river",
           "type": "line",
-          "source": "mapbox",
+          "source": "water",
           "source-layer": "river",
-          "maxzoom": 9,
+          "maxzoom": 15,
           "paint": {
             "line-color": "rgb(0,50,150)",
             "line-width": 1.5
@@ -381,12 +340,53 @@
           ],
         },
 
+        {
+          "id": "water",
+          "type": "fill",
+          "source": "water",
+          "source-layer": "water",
+          "minzoom": 9,
+          "paint": {
+            "fill-color": "hsl(225, .35, .45)"
+          },
+          "filter": [
+            "in",
+            "class",
+            "riverbank", "water"
+          ]
+        },
 
+        {
+          "id": "wetland",
+          "type": "fill",
+          "source": "water",
+          "source-layer": "water",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "hsl(205, .3, .37)"
+          },
+          "filter": [
+            "==",
+            "class",
+            "wetland"
+          ]
+        },
+
+        {
+          "id": "mud",
+          "type": "fill",
+          "source": "water",
+          "source-layer": "mud",
+          "minzoom": land_type_min_zoom,
+          "paint": {
+            "fill-color": "rgb(80,50,20)"
+          },
+        },
 
         {
           "id": "admin",
           "type": "line",
-          "source": "boundaries",
+          "source": "admin",
           "source-layer": "admin",
           "filter": [
             "all",
@@ -403,17 +403,14 @@
           ],
           "paint": {
             "line-color": "rgb(0,150,0)",
-            "line-width": 2
+            "line-width": 1
           }
         },
-
-
-
 
         {
           "id": "aeroway",
           "type": "fill",
-          "source": "mapbox",
+          "source": "aeroway",
           "source-layer": "aeroway",
           "minzoom": 9,
           "paint": {
@@ -424,7 +421,7 @@
         {
           "id": "aeroway_other",
           "type": "fill",
-          "source": "mapbox",
+          "source": "aeroway",
           "source-layer": "aeroway_other",
           "minzoom": 9,
           "paint": {
@@ -433,11 +430,10 @@
           // "filter": [ "==", "$type", "Polygon" ]
         },
 
-
         {
           "id": "road_other",
           "type": "line",
-          "source": "mapbox",
+          "source": "roads",
           "source-layer": "road_other",
           "paint": {
             "line-color": "rgb(110,90,80)",
@@ -457,11 +453,10 @@
           }
         },
 
-
         {
           "id": "road_tertiary",
           "type": "line",
-          "source": "mapbox",
+          "source": "roads",
           "source-layer": "road_tertiary",
           "paint": {
             "line-color": "rgb(150,100,50)",
@@ -481,11 +476,10 @@
           }
         },
 
-
         {
           "id": "road_secondary",
           "type": "line",
-          "source": "mapbox",
+          "source": "roads",
           "source-layer": "road_secondary",
           "paint": {
             "line-color": "rgb(150,100,50)",
@@ -505,15 +499,13 @@
           }
         },
 
-
-
         {
           "id": "road_main",
           "type": "line",
-          "source": "mapbox",
+          "source": "roads",
           "source-layer": "road_main",
           "paint": {
-            "line-color": "rgb(150,0,0)",
+            "line-color": "rgb(125,0,0)",
             "line-width": {
               "base": 1.5,
               "stops": [
@@ -530,11 +522,10 @@
           }
         },
 
-
         {
           "id": "railway",
           "type": "line",
-          "source": "mapbox",
+          "source": "roads",
           "source-layer": "railway",
           "paint": {
             "line-color": "rgb(80,80,80)",
@@ -561,7 +552,7 @@
         {
           "id": "building",
           "type": "fill",
-          "source": "mapbox",
+          "source": "buildings",
           "source-layer": "building",
           "paint": {
             "fill-color": "rgb(110,95,95)",
@@ -570,25 +561,10 @@
           // ,"filter": ["==", "$type", "Polygon"]
         },
 
-
-
-        {
-          "id": "default",
-          "type": "fill",
-          "source": "mapbox",
-          "source-layer": "default",
-          "paint": {
-            "fill-color": "rgb(255,0,255)",
-            "fill-opacity": 1
-          }
-        },
-
-
-
         {
           "id": "place_city",
           "type": "symbol",
-          "source": "mapbox",
+          "source": "labels",
           "source-layer": "place_label",
           "filter": [
             "all",
@@ -638,12 +614,10 @@
           }
         },
 
-
-
         {
           "id": "place_other",
           "type": "symbol",
-          "source": "mapbox",
+          "source": "labels",
           "source-layer": "place_label",
           "minzoom": 12,
           "filter": [
@@ -694,11 +668,10 @@
           }
         },
 
-
         {
           "id": "road_label",
           "type": "symbol",
-          "source": "mapbox",
+          "source": "labels",
           "source-layer": "road_label",
           "filter": [
             "all",
@@ -738,68 +711,8 @@
             "text-halo-blur": 1
           }
         },
-
-
-      ],
-      "id": "g61ohl2cd"
-    };
-
-    var style_admin =
-    {
-      "version": 8,
-      "name": "Basic",
-      "metadata": {
-        "mapbox:autocomposite": true,
-        "mapbox:type": "template"
-      },
-      "sources": {
-        "mapbox": {
-          "type": "vector",
-          "tiles": [
-            "http://localhost:3000/{x}/{y}/{z}.pbf"
-            // "http://localhost/pol/{z}/{x}/{y}.pbf"
-          ],
-          "minzoom": 5,
-          "maxzoom": 15
-        }
-      },
-      "sprite": "mapbox://sprites/mapbox/basic-v9",
-      "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
-      "layers": [
-        {
-          "id": "background",
-          "type": "background",
-          "paint": {
-            "background-color": "hsl(47, 2%, 10%)"
-          }
-        },
-
-        {
-          "id": "admin",
-          "type": "line",
-          "source": "mapbox",
-          "source-layer": "admin",
-          "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "admin_level",
-              2
-            ]
-          ],
-          "paint": {
-            "line-color": "rgb(0,150,0)",
-            "line-width": 2
-          }
-        },
-      ],
-      "id": "g61ohl2cd"
-    };
+      ] // layers
+    }; // STYLE
 
 
     var map = new mapboxgl.Map({
