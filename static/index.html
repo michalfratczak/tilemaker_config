@@ -5,10 +5,12 @@
   <meta charset='utf-8' />
   <title>Display a map</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
   <!-- <script src='js/mapbox-gl.js'></script> -->
   <!-- <link href='css/mapbox-gl.css' rel='stylesheet' /> -->
+
   <style>
     body {
       margin: 0;
@@ -78,7 +80,7 @@
 
     var land_type_min_zoom = 9;
 
-    var data_root = location.origin + "/osm/poland_tiles";
+    var tiles_root = location.origin + "/osm/poland_tiles";
     var fonts = location.origin + "/osm/font/{fontstack}/{range}.pbf";
 
     var data_path_template = "{z}/{x}/{y}.pbf";
@@ -98,37 +100,37 @@
       "sources": {
         "aeroway": {
           "type": "vector",
-          "tiles": [data_root + "/aeroway/" + data_path_template],
+          "tiles": [tiles_root + "/aeroway/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         },
         "buildings": {
           "type": "vector",
-          "tiles": [data_root + "/buildings/" + data_path_template],
+          "tiles": [tiles_root + "/buildings/" + data_path_template],
           "minzoom": 14, "maxzoom": 15
         },
         "labels": {
           "type": "vector",
-          "tiles": [data_root + "/labels/" + data_path_template],
+          "tiles": [tiles_root + "/labels/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         },
         "landuse": {
           "type": "vector",
-          "tiles": [data_root + "/landuse/" + data_path_template],
+          "tiles": [tiles_root + "/landuse/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         },
         "roads": {
           "type": "vector",
-          "tiles": [data_root + "/roads/" + data_path_template],
+          "tiles": [tiles_root + "/roads/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         },
         "water": {
           "type": "vector",
-          "tiles": [data_root + "/water/" + data_path_template],
+          "tiles": [tiles_root + "/water/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         },
         "admin": {
           "type": "vector",
-          "tiles": [data_root + "/admin/" + data_path_template],
+          "tiles": [tiles_root + "/admin/" + data_path_template],
           "minzoom": 5, "maxzoom": 15
         }
       },
