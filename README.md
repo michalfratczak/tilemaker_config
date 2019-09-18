@@ -1,6 +1,8 @@
 Example usage and config of tilemaker
 ==========================================
 
+This is WIP
+
 Getting OSM Data
 ------------------------
 
