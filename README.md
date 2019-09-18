@@ -48,7 +48,7 @@ Copy/symlink tiles and fonts
 
 Serving tiles with python bottle
 ------------------------------------
-to do
+to do - but look into server.py
 
 
 todo:
