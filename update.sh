@@ -1,7 +1,9 @@
 #!/bin/sh
 
+##
 # $1 is path to PBF file
 # $2 is output dir
+# /usr/bin/time -v is used to report execution time and memory usage
 
 mkdir $2
 # /usr/bin/time -v ./tilemaker --combine 0 --config ./hab_aeroway.json 	--process ./hab_aeroway.lua 	--input $1 --output $2/aeroway
