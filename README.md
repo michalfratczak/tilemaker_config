@@ -1,7 +1,13 @@
 Example usage and config of tilemaker
 ==========================================
 
-This is WIP
+This shows how to configure and use tilemaker and how to get input data.
+https://github.com/systemed/tilemaker
+
+Configuration files are tailored for use with MapBox.
+Here is demo showing how maps rendering look like with mapbox: https://www.youtube.com/watch?v=ZuoNf171e_A&t=2s
+
+This repo is very much WIP-state.
 
 Getting OSM Data
 ------------------------
@@ -9,9 +15,8 @@ Getting OSM Data
 First, you need to download OSM data _EXTRACT_ in pbf format.
 Get it from here:
 
-    http://download.geofabrik.de/europe/poland.html
-
-    http://download.geofabrik.de/europe/poland-latest.osm.pbf
+http://download.geofabrik.de/europe/poland.html
+http://download.geofabrik.de/europe/poland-latest.osm.pbf
 
 Getting boundaries shape files
 -------------------------------
@@ -57,4 +62,4 @@ todo:
 ------
 - fix server to actually serve some html (and not only tiles)
 - fix html with comments and paths to OSM directiories
-- add font download location
+
