@@ -9,6 +9,13 @@ Here is demo showing how maps rendering look like with mapbox: https://www.youtu
 
 This repo is very much WIP-state.
 
+Getting tilemaker
+------------------------
+YOu can either build from source or download precompiled executable from GitHubs Continous Integration:
+https://github.com/systemed/tilemaker/actions/workflows/ci.yml
+
+Go to last successful build, and at the bottom of the page you should see links to EXEcs (Artifacts).
+
 Getting OSM Data
 ------------------------
 
