@@ -7,7 +7,9 @@ https://github.com/systemed/tilemaker
 Configuration files are tailored for use with MapBox.
 Here is demo showing how maps rendering look like with mapbox: https://www.youtube.com/watch?v=ZuoNf171e_A&t=2s
 
-This repo is very much WIP-state.
+This repo is very much WIP-state. 
+
+Also the tilemaker repo itself has improved with out-of-the-box configuration, so this repo might be obsolete.
 
 Getting tilemaker
 ------------------------
@@ -28,7 +30,12 @@ http://download.geofabrik.de/europe/poland-latest.osm.pbf
 Getting boundaries shape files
 -------------------------------
 
-https://wambachers-osm.website/boundaries/
+https://github.com/haoliangyu/boundary.now
+
+You need to extraxt .shp and .shx files. 
+
+Also, edit hab_admin.json file to update path to .shp file.
+
 
 Converting PBF to Tiles
 ------------------------
